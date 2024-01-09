@@ -22,7 +22,6 @@ fi
 pip install -r requirements-dev.txt
 
 pyinstaller -F bdchecker/main.py --distpath dist/bdchecker -n bdchecker
-cp -r ./etc dist/bdchecker/
 cp ./README.md dist/bdchecker/
 cp ./README_cn.md dist/bdchecker/
 cp ./LICENSE dist/bdchecker/
