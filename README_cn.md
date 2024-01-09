@@ -1,0 +1,77 @@
+## bdchecker
+
+* [readme 中文](./README_cn.md)
+* [readme EN](./README.md)
+
+## 概述
+bdchecker (**B**ackup **D**ata Checker) 是用于个人冷备数据检查的工具, 帮助你及时发现数据的损坏  
+
+## 为什么需要它
+想象一下, 我们有一些数据需要进行冷备, 可能是每天压缩后的某个金融市场的原始行情数据; 或是一些个人拥有的经典电影的电子版本; 抑或是一些常年用不到的密钥；我们先列出一些方案:  
+
+| 方案 | 单个存储期限级别 |
+| ---- | ---- |
+| 固态盘 | 几年至十几年 |
+| 机械盘 | 10年+ |
+| 磁带 | 30年+ |
+| 打孔纸带 | 千年 |
+| 刻在石头上 (罗辑把拐杖高举过头, 庄严地喊道) | 百万年 |
+
+毫无疑问, 若是有足够的财力, 把信息刻在石头上并妥当存储, 除非遭到了二向箔攻击, 否则应该十分安全；但是对于个人而言, 从石头上读取信息带来的成本应该是远大于我们需要保存的数据的价值的  
+所以当考虑数据的易于读写性的时候, 那么毫无疑问, 硬盘是最为方便的；但是这带来了额外的要求, 那便是我们需要定期的检查数据是否出现了损坏, 这便可以通过 **bdchecker** 来实现  
+
+## 安装
+* 使用 pip 安装
+```
+pip install bdchecker
+```
+* 直接从 [Releases](https://github.com/MuggleWei/bdchecker/releases) 中获取, 解压并使用
+
+## 使用
+**bdchecker** 包含三个命令, 分别为
+* gen: 扫描目录, 并递归遍历生成该目录下所有**新增**文件的 hash 信息, 放置在目录中的 `.bdchecker.meta` 文件夹中
+* clean: 扫描目录, 从 hash 信息中清理掉已删除的文件
+* check: 扫描目录, 查找出现损坏的文件
+
+### 示例目录
+假设当前有如下目录结构  
+```
+data
+├──── a.txt
+├──── b.txt
+└──── c
+      ├──── c1.txt
+      └──── c2.txt
+```
+
+### gen 示例
+生成信息
+```
+bdchecker gen -d data -v 1
+```
+* `-d`: 表示要生成信息的目录
+* `-v`: 表示日志输出级别, 越高输出越详细
+
+完成后, 可以看到屏幕上日志输出: `dump meta info to data/.bdchecker.meta/sha256.csv`  
+当目录中没有新增文件时, 重复执行 `gen` 命令并不会真正的去生成文件的 hash 信息  
+
+### clean 示例
+删除 `data/c/c2.txt`, 并运行
+```
+bdchecker clean -d data -v 1
+```
+
+可以在日志倒数几行看到: `clean missing file's meta info: c/c2.txt`, 表示当前我们已经成功清理了文件对应的 hash 信息
+
+### check 示例
+运行
+```
+bdchecker check -d data -v 1
+```
+日志的最后一行出现: `all check pass`, 代表没有新增/删除的文件, 且所有的文件都没有损坏  
+
+现在让我们稍微更改一下文件 `a.txt`，随便更改一下其中的内容，再次运行
+```
+bdchecker check -d data -v 1
+```
+此时，日志出现错误信息: `check failed: a.txt, old hash: ..., cur hash: ...`，表示 `a.txt` 的内容出现了改变
