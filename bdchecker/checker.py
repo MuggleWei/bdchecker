@@ -190,8 +190,8 @@ class Checker:
         # dump
         logging.info("dump meta info to {}".format(meta_filepath))
         sorted_dict = dict(sorted(meta_dict.items()))
-        with open(tmp_meta_filepath, "w") as f:
-            writer = csv.writer(f, delimiter=",")
+        with open(tmp_meta_filepath, "w", newline='', encoding='utf-8') as f:
+            writer = csv.writer(f, delimiter=",", lineterminator='\n')
             writer.writerow(["k", "v"])
             for k, v in sorted_dict.items():
                 writer.writerow([k, v])
