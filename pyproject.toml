@@ -29,7 +29,7 @@ bdchecker = "bdchecker.main:main"
 
 [tool.setuptools]
 include-package-data = true
-packages = ["bdchecker"]
+packages = ["bdchecker", "bdchecker.command", "bdchecker.utils"]
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
