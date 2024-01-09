@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bdchecker"
+license = {file = "LICENSE"}
+authors = [
+    {name="Muggle Wei", email="mugglewei@gmail.com"}
+]
+description = "Backup Data Checker"
+readme = "README.md"
+requires-python = ">=3.8"
+keywords = ["data cold backup", "data checker"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dynamic = ["dependencies", "version"]
+
+[project.scripts]
+bdchecker = "bdchecker.main:main"
+
+[project.urls]
+"Homepage" = "https://github.com/MuggleWei/bdchecker"
+"Bug Tracker" = "https://github.com/MuggleWei/bdchecker/issues"
+
+[tool.setuptools]
+include-package-data = true
+packages = ["bdchecker"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+version = {attr = "bdchecker.__version__.__version__"}

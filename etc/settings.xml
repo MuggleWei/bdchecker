@@ -1,0 +1,8 @@
+<bdchecker>
+    <!--
+    log config
+    :param console_level: console output log filter level
+    :param flle level: file output log filter level
+    -->
+    <log console_level="info" file_level="debug" />
+</bdchecker>
