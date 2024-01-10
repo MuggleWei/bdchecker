@@ -16,7 +16,13 @@ Imagine that we have some data that needs to be cold backup, which may be the ra
 | Carved in stone (Luo Ji raised his crutch above his head and shouted solemnly) | millions of years |
 
 There is no doubt that if you have enough financial resources to engrave the information on stone and store it properly, it should be very safe unless you are attacked by a dual-vector foil attack; but for individuals, the cost of reading information from stones should be far greater than the value of the data we need to save.  
-So when considering the ease of reading and writing of data, there is no doubt that the hard disk is the most convenient; but this brings additional requirements, that is, we need to regularly check whether the data is corrupted, this is the reason why use **bdchecker**  
+So when considering the ease of reading and writing of data, it is obvious that the hard disk is the most convenient; but this brings additional requirements, that is, we need to regularly check whether the data is corupted.  
+To sum up, a simple and clear cold backup solution is  
+1. Use hard drives from different production batches for multiple backups
+2. Regularly check whether files are corupted
+3. If corupted occurs, the remaining backup files can be used to repair it.
+
+**bdchecke** is a small tool used to `regularly check whether files are corupted`
 
 ## Install
 * use pip
