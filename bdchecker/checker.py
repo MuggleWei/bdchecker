@@ -162,19 +162,26 @@ class Checker:
             logging.debug(
                 "calculate hash value: {}, {}".format(k, hash_val_hex))
 
+        is_all_pass = True
         for k, v in old_meta_dict.items():
             if k not in meta_dict:
                 logging.warning("missing file: {}".format(k))
+                is_all_pass = False
 
         for k, v in meta_dict.items():
             if k not in old_meta_dict:
                 logging.warning("new file: {}".format(k))
+                is_all_pass = False
 
             old_v = old_meta_dict[k]
             if v != old_v:
                 logging.error(
                     "check failed: {}, old hash: {}, cur hash: {}".format(
                         k, old_v, v))
+                is_all_pass = False
+
+        if is_all_pass is True:
+            logging.info("all check pass")
 
     def _dump_meta(self, meta_filepath, meta_dict):
         """
