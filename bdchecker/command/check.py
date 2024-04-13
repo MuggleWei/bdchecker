@@ -19,7 +19,7 @@ class CommandCheck:
             "".format(APP_NAME)
 
         self._dir = ""
-        self._verbose = 0
+        self._verbose = 1
         self._hash_algo = "sha256"
 
     def run(self, args):
